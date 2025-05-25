@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:background="#DCDCD9"
+        android:gravity="center"
+        android:text="תקלות פעילות"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TableLayout
+        android:id="@+id/tableLayout2"
+        android:layout_width="373dp"
+        android:layout_height="107dp"
+        android:layout_marginTop="36dp"
+        android:background="#000000"
+        android:padding="8dp"
+        android:stretchColumns="*"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.421"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView11"> <!-- outer border -->
+
+        <!-- Row 1 -->
+
+        <!-- Row 2 -->
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="מספר"
+                android:textColor="#000000"
+                android:textSize="10sp" />
+
+            <TextView
+                android:layout_width="70dp"
+                android:background="#FFFFFF"
+                android:padding="8dp"
+                android:text="סוג תקלה"
+                android:textColor="#000000"
+                android:textSize="10sp" />
+
+            <TextView
+                android:layout_width="97dp"
+                android:background="#FFFFFF"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="תאריך פתיחה"
+                android:textColor="#000000"
+                android:textSize="10sp" />
+
+            <TextView
+                android:layout_width="124dp"
+                android:background="#FFFFFF"
+                android:padding="8dp"
+                android:text="סטטוס תקלה"
+                android:textColor="#000000"
+                android:textSize="10sp" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:background="#FFFFFF"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="1"
+                android:textColor="#000000"
+                android:textSize="10sp" />
+
+            <TextView
+                android:background="#FFFFFF"
+                android:padding="8dp"
+                android:text="חימום"
+                android:textColor="#000000"
+                android:textSize="10sp" />
+
+            <TextView
+                android:background="#FFFFFF"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="1.4.25"
+                android:textColor="#000000"
+                android:textSize="10sp" />
+
+            <TextView
+                android:background="#FFFFFF"
+                android:padding="8dp"
+                android:text="הוזמן טכנאי"
+                android:textColor="#000000"
+                android:textSize="10sp" />
+        </TableRow>
+
+        <!-- Row 3 -->
+        <TableRow>
+
+            <TextView
+                android:background="#FFFFFF"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="2"
+                android:textColor="#000000"
+                android:textSize="10sp" />
+
+            <TextView
+                android:background="#FFFFFF"
+                android:padding="8dp"
+                android:text="עובש"
+                android:textColor="#000000"
+                android:textSize="10sp" />
+
+            <TextView
+                android:background="#FFFFFF"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="31.3.25"
+                android:textColor="#000000"
+                android:textSize="10sp" />
+
+            <TextView
+                android:background="#FFFFFF"
+                android:padding="8dp"
+                android:text="ממתין לטיפול"
+                android:textColor="#000000"
+                android:textSize="10sp" />
+        </TableRow>
+
+    </TableLayout>
+
+    <Button
+        android:id="@+id/btnReturn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#5998F6"
+        android:text="חזרה"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout2"
+        app:layout_constraintVertical_bias="0.863" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
