@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.util.Log;
+import android.widget.Toast;
 
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
@@ -50,8 +51,8 @@ public class MainActivity extends AppCompatActivity {
                 String user_str = username.getText().toString();
                 String password_str = password.getText().toString();
                 authenticate(user_str, password_str);
-                Intent intent = new Intent(MainActivity.this, StudentActivity.class);
-                startActivity(intent);
+                //Intent intent = new Intent(MainActivity.this, StudentActivity.class);
+                //startActivity(intent);
             }
         });
     }
@@ -62,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         OkHttpClient client = new OkHttpClient();
         String sql = "SELECT * FROM \"DormitoriesPlus_user\" WHERE username = '" + username + "' And password = '" + password + "'";
         Log.d("MainActivity.auth", "sql: " + sql);
-        HttpUrl url = HttpUrl.parse("http://10.0.2.2:8000/api/buildings/")
+        HttpUrl url = HttpUrl.parse("http://10.0.2.2:8000/api/users/")
                 .newBuilder()
                 .addQueryParameter("q", sql)
                 .build();
@@ -86,7 +87,12 @@ public class MainActivity extends AppCompatActivity {
                     String json = response.body().string();
                     // Parse JSON using Gson or org.json
                     Log.d("MainActivity.auth", json);
+                    if(json.equals("[]"))
+                        Toast.makeText(MainActivity.this, "Invalid username or password", Toast.LENGTH_LONG).show();
+                    else
+                        Log.e("MainActivity.auth", "Got good json response");
                 } else {
+                    Toast.makeText(MainActivity.this, "Invalid username or password", Toast.LENGTH_LONG).show();
                     Log.e("MainActivity.auth", "Request failed. Code: " + response.code());
                     Log.e("MainActivity.auth", "Body: " + response.body().string());
                 }
