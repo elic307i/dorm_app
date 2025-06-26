@@ -22,7 +22,12 @@
         <activity android:name=".BorrowRequest" />
         <activity android:name=".ContactsActivity" />
         <activity android:name=".BorrowList" />
+        <activity android:name=".EnBorrowList" />
         <activity android:name=".FaultList" />
+        <activity android:name=".EnStudentActivity" />
+        <activity android:name=".EnBorrowRequest" />
+        <activity android:name=".EnReportFault" />
+        <activity android:name=".EnFaultList" />
 
         <activity
             android:name=".MainActivity"

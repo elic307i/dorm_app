@@ -1,243 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/dormi_logo"
+    android:padding="24dp"
+    android:backgroundTint="#F8F9FA"
+    android:backgroundTintMode="screen"
+    tools:context=".ContactsActivity">
 
+    <!-- Title -->
     <TextView
-        android:id="@+id/dormsofficeinfo2"
-        android:layout_width="0dp"
-        android:layout_height="24dp"
-        android:layout_marginTop="20dp"
-        android:text="  פרטי אחראיי ביתן:"
-        android:textColor="#11206F"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.944"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8" />
-
-    <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/contactTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:background="#DCDCD9"
-        android:gravity="center"
-        android:text="צור קשר"
-        android:textColor="#11206F"
+        android:text="צור קשר / Contact"
+        android:textColor="#2F5DA9"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginTop="48dp"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="321dp"
-        android:layout_height="89dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/technionsym2" />
-
+    <!-- Office Details Header -->
     <TextView
-        android:id="@+id/dormsofficeinfo"
+        android:id="@+id/officeHeader"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="88dp"
-        android:text="  פרטי משרד מעונות:"
+        android:text="פרטי משרד המעונות / Dorms Office Info:"
         android:textColor="#11206F"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.919"
+        android:textStyle="bold"
+        android:layout_marginTop="32dp"
+        app:layout_constraintTop_toBottomOf="@id/contactTitle"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Operating Hours -->
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/hoursText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:text="  טלפון 0541234567"
+        android:text="שעות פעילות: 9:30–12:30 / Hours: 9:30–12:30"
         android:textColor="#11206F"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.923"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView7" />
-
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="  שעות פעילות 9:30-12:30"
-        android:textColor="#11206F"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.916"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dormsofficeinfo" />
-
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:text="rifkin@technion.ac.il"
-        android:textColor="#11206F"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.056"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
-
-    <TableLayout
-        android:id="@+id/contactTable"
-        android:layout_width="327dp"
-        android:layout_height="294dp"
+        android:textSize="14sp"
         android:layout_marginTop="16dp"
-        android:padding="16dp"
-        android:stretchColumns="1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.357"
+        app:layout_constraintTop_toBottomOf="@id/officeHeader"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dormsofficeinfo2">
+        app:layout_constraintEnd_toEndOf="parent" />
 
-        <!-- Headline Row -->
-        <TableRow>
+    <!-- Phone -->
+    <TextView
+        android:id="@+id/phoneText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="טלפון: 054-1234567 / Phone"
+        android:textColor="#11206F"
+        android:textSize="14sp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintTop_toBottomOf="@id/hoursText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-            <TextView
-                android:padding="8dp"
-                android:text="מספר טלפון"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+    <!-- Email -->
+    <TextView
+        android:id="@+id/emailText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="דוא״ל: rifkin@technion.ac.il / Email"
+        android:textColor="#11206F"
+        android:textSize="14sp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintTop_toBottomOf="@id/phoneText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-            <TextView
-                android:padding="8dp"
-                android:text="שם האחראי"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:padding="8dp"
-                android:text="ביתן"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-        </TableRow>
-
-        <!-- Row 1 -->
-        <TableRow>
-
-            <TextView
-                android:padding="8dp"
-                android:text="050-1111111" />
-
-            <TextView
-                android:padding="8dp"
-                android:text="יהונתן לוי" />
-
-            <TextView
-                android:padding="8dp"
-                android:text="101" />
-
-        </TableRow>
-
-        <!-- Row 2 -->
-        <TableRow>
-
-            <TextView
-                android:padding="8dp"
-                android:text="050-2222222" />
-
-            <TextView
-                android:padding="8dp"
-                android:text="אפריים כהן" />
-
-            <TextView
-                android:padding="8dp"
-                android:text="102" />
-        </TableRow>
-
-        <!-- Row 3 -->
-        <TableRow>
-
-            <TextView
-                android:padding="8dp"
-                android:text="050-3333333" />
-
-            <TextView
-                android:padding="8dp"
-                android:text="קרן טל" />
-
-            <TextView
-                android:padding="8dp"
-                android:text="103" />
-        </TableRow>
-
-        <!-- Row 4 -->
-        <TableRow>
-
-            <TextView
-                android:padding="8dp"
-                android:text="050-4444444" />
-
-            <TextView
-                android:padding="8dp"
-                android:text="שני כץ" />
-
-            <TextView
-                android:padding="8dp"
-                android:text="104" />
-        </TableRow>
-
-        <!-- Row 5 -->
-        <TableRow>
-
-            <TextView
-                android:padding="8dp"
-                android:text="050-5555555" />
-
-            <TextView
-                android:padding="8dp"
-                android:text="יואב אברהם" />
-
-            <TextView
-                android:padding="8dp"
-                android:text="105" />
-        </TableRow>
-
-        <!-- Row 6 -->
-        <TableRow>
-
-            <TextView
-                android:padding="8dp"
-                android:text="050-6666666" />
-
-            <TextView
-                android:padding="8dp"
-                android:text="דן גמליאל" />
-
-            <TextView
-                android:padding="8dp"
-                android:text="106" />
-        </TableRow>
-
-    </TableLayout>
-
-    <Button
+    <!-- Return Button -->
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnReturn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:backgroundTint="#5998F6"
-        android:text="חזרה"
-        app:layout_constraintBottom_toTopOf="@+id/imageView3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        android:text="חזרה / Return"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="32dp"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        app:cornerRadius="20dp"
+        app:backgroundTint="#2F5DA9"
+        app:layout_constraintTop_toBottomOf="@id/emailText"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/contactTable"
-        app:layout_constraintVertical_bias="1.0" />
-
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

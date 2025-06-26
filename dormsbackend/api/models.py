@@ -7,7 +7,6 @@
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 
-
 class DormitoriesplusBuilding(models.Model):
     id = models.BigAutoField(primary_key=True)
     building_name = models.CharField(max_length=255)
@@ -138,7 +137,7 @@ class DormitoriesplusUser(models.Model):
     email = models.CharField(unique=True, max_length=254)
     field_encrypted_id_number = models.CharField(db_column='_encrypted_id_number', max_length=255, blank=True, null=True)  # Field renamed because it started with '_'.
     field_encrypted_phone = models.CharField(db_column='_encrypted_phone', max_length=255, blank=True, null=True)  # Field renamed because it started with '_'.
-
+    
     class Meta:
         managed = False
         db_table = 'DormitoriesPlus_user'

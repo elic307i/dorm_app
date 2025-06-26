@@ -1,5 +1,6 @@
 package com.technion.dormsapp;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -14,15 +15,22 @@ import android.widget.EditText;
 import android.util.Log;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import okhttp3.FormBody;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Callback;
 import java.io.IOException;
 import okhttp3.Call;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
+
+    public static final String url = "http://10.0.2.2:8000/api/";
     Button studentButton;
     Button BuildingManButton;
     Button officeManButton;
@@ -51,53 +59,78 @@ public class MainActivity extends AppCompatActivity {
                 String user_str = username.getText().toString();
                 String password_str = password.getText().toString();
                 authenticate(user_str, password_str);
-                //Intent intent = new Intent(MainActivity.this, StudentActivity.class);
-                //startActivity(intent);
             }
         });
     }
 
     private void authenticate(String username, String password) {
         Log.d("MainActivity.auth", "username: " + username);
-        Log.d("MainActivity.auth", "username: " + password);
+        Log.d("MainActivity.auth", "password: " + password);
+
         OkHttpClient client = new OkHttpClient();
-        String sql = "SELECT * FROM \"DormitoriesPlus_user\" WHERE username = '" + username + "' And password = '" + password + "'";
-        Log.d("MainActivity.auth", "sql: " + sql);
-        HttpUrl url = HttpUrl.parse("http://10.0.2.2:8000/api/users/")
-                .newBuilder()
-                .addQueryParameter("q", sql)
+
+        RequestBody body = new FormBody.Builder()
+                .add("username", username)
+                .add("password", password)
+                .build();
+        String tempurl = url + "login/";
+        Log.d("MainActivity.auth", "Url: " + tempurl);
+
+        Request request = new Request.Builder()
+                .url(tempurl)
+                .post(body)
                 .build();
 
-        Log.d("MainActivity.auth", "Sending request to: " + url.toString());
-        Request request = new Request.Builder()
-                .url(url)
-                .build();
+        Log.d("MainActivity.auth", "Sending request...");
 
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.e("MainActivity.auth", "Network error", e);
-                e.printStackTrace();
+                runOnUiThread(() -> {
+                    Log.e("MainActivity.auth", "Network error", e);
+                    Toast.makeText(MainActivity.this, "Cannot access server", Toast.LENGTH_LONG).show();
+                });
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                Log.d("MainActivity.auth", "got response");
-                if (response.isSuccessful()) {
-                    String json = response.body().string();
-                    // Parse JSON using Gson or org.json
-                    Log.d("MainActivity.auth", json);
-                    if(json.equals("[]"))
-                        Toast.makeText(MainActivity.this, "Invalid username or password", Toast.LENGTH_LONG).show();
-                    else
-                        Log.e("MainActivity.auth", "Got good json response");
-                } else {
-                    Toast.makeText(MainActivity.this, "Invalid username or password", Toast.LENGTH_LONG).show();
-                    Log.e("MainActivity.auth", "Request failed. Code: " + response.code());
-                    Log.e("MainActivity.auth", "Body: " + response.body().string());
-                }
-            }
+                String json = response.body().string();
+                Log.d("MainActivity.auth", "Response: " + json);
 
+                runOnUiThread(() -> {
+                    if (response.isSuccessful()) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(json);
+                            boolean success = jsonObject.getBoolean("success");
+
+                            if (success) {
+                                Log.d("MainActivity.auth", "Login successful");
+                                int userId = jsonObject.getInt("user_id");
+                                int roomId = jsonObject.optInt("room_id", -1);
+                                SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+                                SharedPreferences.Editor editor = prefs.edit();
+                                editor.putInt("user_id", userId);
+                                editor.putInt("room_id", roomId);
+                                editor.apply();
+                                Log.d("MainActivity.auth", "Saved to SharedPreferences - user_id: " + userId + ", room_id: " + roomId);
+                                Intent intent = new Intent(MainActivity.this, StudentActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                String error = jsonObject.optString("error", "Invalid credentials");
+                                Toast.makeText(MainActivity.this, error, Toast.LENGTH_LONG).show();
+                            }
+                        } catch (JSONException e) {
+                            Toast.makeText(MainActivity.this, "Invalid server response", Toast.LENGTH_LONG).show();
+                            Log.e("MainActivity.auth", "JSON parse error", e);
+                        }
+                    } else {
+                        Toast.makeText(MainActivity.this, "Login failed. Invalid credentials", Toast.LENGTH_LONG).show();
+                        Log.e("MainActivity.auth", "Request failed. Code: " + response.code());
+                    }
+                });
+            }
         });
     }
+
 }

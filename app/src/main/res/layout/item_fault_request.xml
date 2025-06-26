@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp"
+    android:background="#EEEEEE">
+
+    <!-- Row number -->
+    <TextView
+        android:id="@+id/rowNumberTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="1"
+        android:textDirection="rtl"
+        android:textSize="14sp" />
+
+    <!-- Fault Type -->
+    <TextView
+        android:id="@+id/faultTypeTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:text="חשמל"
+        android:textDirection="rtl"
+        android:textSize="14sp" />
+
+    <!-- Opening Date (return_date field used as creation date fallback) -->
+    <TextView
+        android:id="@+id/openDateTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:text="2025-06-24"
+        android:textDirection="rtl"
+        android:textSize="14sp" />
+
+    <!-- Status -->
+    <TextView
+        android:id="@+id/statusTextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:text="ממתין"
+        android:textDirection="rtl"
+        android:textSize="14sp" />
+
+</LinearLayout>

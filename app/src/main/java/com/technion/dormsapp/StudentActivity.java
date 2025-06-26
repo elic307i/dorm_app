@@ -1,12 +1,12 @@
 package com.technion.dormsapp;
-
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
-
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+
 
 public class StudentActivity extends AppCompatActivity {
 
@@ -19,7 +19,15 @@ public class StudentActivity extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish(); // ← This goes back to the previous activity
+                SharedPreferences prefs = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.clear(); // Clear all stored values
+                editor.apply();
+                Intent intent = new Intent(StudentActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Clear back stack
+                startActivity(intent);
+
+                finish();
             }
         });
 
@@ -41,8 +49,17 @@ public class StudentActivity extends AppCompatActivity {
             }
         });
 
-        ImageButton btnContact = findViewById(R.id.btnContact);
-        btnContact.setOnClickListener(new View.OnClickListener() {
+        Button btnEnglish = findViewById(R.id.english);
+        btnEnglish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(StudentActivity.this, EnStudentActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        CardView contactCard = findViewById(R.id.contactCard);
+        contactCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(StudentActivity.this, ContactsActivity.class);
