@@ -1,5 +1,6 @@
 package com.technion.dormsapp;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -18,22 +19,30 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.InputStream;
+import java.io.IOException;
+import java.security.KeyStore;
+import java.security.cert.Certificate;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
+
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.TrustManagerFactory;
+import javax.net.ssl.X509TrustManager;
+
 import okhttp3.FormBody;
-import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Callback;
-import java.io.IOException;
 import okhttp3.Call;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String url = "http://10.0.2.2:8000/api/";
+    public static final String url = "https://elichome.tplinkdns.com/api/";
     Button studentButton;
-    Button BuildingManButton;
-    Button officeManButton;
     EditText username;
     EditText password;
 
@@ -52,22 +61,55 @@ public class MainActivity extends AppCompatActivity {
         username = findViewById(R.id.UserName);
         password = findViewById(R.id.password);
 
-
-        studentButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String user_str = username.getText().toString();
-                String password_str = password.getText().toString();
-                authenticate(user_str, password_str);
-            }
+        studentButton.setOnClickListener(v -> {
+            String user_str = username.getText().toString();
+            String password_str = password.getText().toString();
+            authenticate(user_str, password_str);
         });
+    }
+
+    private OkHttpClient getSecureOkHttpClient(Context context) {
+        try {
+            CertificateFactory cf = CertificateFactory.getInstance("X.509");
+            InputStream caInput = context.getResources().openRawResource(R.raw.rootca);
+            Certificate ca = cf.generateCertificate(caInput);
+            caInput.close();
+
+            KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
+            keyStore.load(null, null);
+            keyStore.setCertificateEntry("ca", ca);
+
+            TrustManagerFactory tmf = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+            tmf.init(keyStore);
+
+            SSLContext sslContext = SSLContext.getInstance("TLS");
+            sslContext.init(null, tmf.getTrustManagers(), null);
+
+            X509TrustManager trustManager = null;
+            for (TrustManager tm : tmf.getTrustManagers()) {
+                if (tm instanceof X509TrustManager) {
+                    trustManager = (X509TrustManager) tm;
+                    break;
+                }
+            }
+            if (trustManager == null) {
+                throw new IllegalStateException("No X509TrustManager found");
+            }
+
+            return new OkHttpClient.Builder()
+                    .sslSocketFactory(sslContext.getSocketFactory(), trustManager)
+                    .build();
+
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to set up secure OkHttpClient", e);
+        }
     }
 
     private void authenticate(String username, String password) {
         Log.d("MainActivity.auth", "username: " + username);
         Log.d("MainActivity.auth", "password: " + password);
 
-        OkHttpClient client = new OkHttpClient();
+        OkHttpClient client = getSecureOkHttpClient(this);
 
         RequestBody body = new FormBody.Builder()
                 .add("username", username)
@@ -132,5 +174,4 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
 }
